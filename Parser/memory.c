@@ -124,3 +124,34 @@ char * getString(char * name)
 
     return result;
 }
+
+void createBool(char * name, int value, int builtIn)
+{
+    struct Object obj;
+
+    obj.valid = 1;
+    obj.type = TYPE_STRING;
+
+    strcpy(obj.name, name);
+    obj.builtIn = builtIn;
+    obj.boolValue = value;
+
+    mem.size++;
+    mem.memory[mem.size] = obj;
+}
+
+char * getBool(char * name)
+{
+    int result;
+
+    for (int i = 0; i < mem.size; i++)
+    {
+        struct Object obj = mem.memory[i];
+        if (obj.name == name)
+        {
+            result = obj.boolValue;
+        }
+    }
+
+    return result;
+}
