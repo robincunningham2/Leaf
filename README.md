@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="icon.png" width="100" height="80"><br/>
+    <img src="Assets/icon.png" width="100" height="80"><br/>
     A simple and fast programming language.
 </div>
 
