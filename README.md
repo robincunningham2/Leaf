@@ -7,6 +7,7 @@
 * Easy: The simple syntax can be learned in only a few minutes.
 * Fast compilation: Compiles itself in less than 1 sec.
 * Speed: As fast as C is.
+* Lightweight: Only `24.6kB` in size.
 
 ## Installation
 Install using `git`:
