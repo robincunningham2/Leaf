@@ -15,3 +15,22 @@
 #define RBR         10
 #define LSQB        11
 #define RSQB        12
+
+// Operators
+#define PLUS        13
+#define MINUS       14
+#define MULTI       15
+#define SLASH       16
+#define VBAR        17
+#define AND         18
+#define DOT         19
+#define COMMA       20
+#define COLON       21
+#define SEMICOLON   22
+#define EQUAL       23
+#define ISEQUAL     24
+#define NOTEQUAL    25
+#define LESS        26
+#define GREATER     27
+
+#define COMMENT     28
