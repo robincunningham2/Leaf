@@ -78,9 +78,9 @@ void createFloat(char * name, float value, int builtIn)
     mem.memory[mem.size] = obj;
 }
 
-float getInt(char * name)
+float getFloat(char * name)
 {
-    int result;
+    float result;
 
     for (int i = 0; i < mem.size; i++)
     {
