@@ -4,10 +4,8 @@
 
 extern int yylex();
 extern void init();
-extern int getInt(char * name);
-extern void createInt(char * name, int builtIn, int value);
 
-int main (int argc, char * argv[])
+int main(int argc, char * argv[])
 {
     init();
 
