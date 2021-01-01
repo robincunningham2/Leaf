@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #define TYPE_INT    1
 #define TYPE_FLOAT  2
@@ -39,7 +40,10 @@ void createInt(char * name, int value, int builtIn)
     obj.valid = 1;
     obj.type = TYPE_INT;
 
-    strcpy(obj.name, name);
+    char * str = malloc(strlen(name) + 1);
+    strcpy(str, name);
+    obj.name = str;
+
     obj.builtIn = builtIn;
     obj.intValue = value;
 
@@ -70,7 +74,10 @@ void createFloat(char * name, float value, int builtIn)
     obj.valid = 1;
     obj.type = TYPE_FLOAT;
 
-    strcpy(obj.name, name);
+    char * str = malloc(strlen(name) + 1);
+    strcpy(str, name);
+    obj.name = str;
+
     obj.builtIn = builtIn;
     obj.floatValue = value;
 
@@ -101,9 +108,15 @@ void createString(char * name, char * value, int builtIn)
     obj.valid = 1;
     obj.type = TYPE_STRING;
 
-    strcpy(obj.name, name);
+    char * str = malloc(strlen(name) + 1);
+    strcpy(str, name);
+    obj.name = str;
+
     obj.builtIn = builtIn;
-    strcpy(obj.stringValue, value);
+
+    char * str2 = malloc(strlen(value) + 1);
+    strcpy(str2, value);
+    obj.stringValue = str2;
 
     mem.size++;
     mem.memory[mem.size] = obj;
@@ -130,9 +143,12 @@ void createBool(char * name, int value, int builtIn)
     struct Object obj;
 
     obj.valid = 1;
-    obj.type = TYPE_STRING;
+    obj.type = TYPE_BOOL;
 
-    strcpy(obj.name, name);
+    char * str = malloc(strlen(name) + 1);
+    strcpy(str, name);
+    obj.name = str;
+
     obj.builtIn = builtIn;
     obj.boolValue = value;
 
@@ -140,7 +156,7 @@ void createBool(char * name, int value, int builtIn)
     mem.memory[mem.size] = obj;
 }
 
-char * getBool(char * name)
+int getBool(char * name)
 {
     int result;
 
