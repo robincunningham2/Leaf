@@ -13,6 +13,13 @@
 (func|val|if|else|while|for)*           return KEYWORD;
 [_A-Za-z][_A-Za-z0-9]*                  return IDENTIFIER;
 
+"("                                     return LPAR;
+")"                                     return RPAR;
+"{"                                     return LBR;
+"}"                                     return RBR;
+"["                                     return LSQB;
+"]"                                     return RSQB;
+
 [ \n\t]                                 ;
 .                                       printf("Error.\n");
 
