@@ -5,15 +5,16 @@
 
 %%
 
-[1-9][0-9]*                     return INTEGER;
-[1-9][0-9].[0-9]*               return FLOAT;
-\"(\\\\|\\\"|[^\"])*\"          return STRING;
-(true|false)                    return BOOLEAN;
+[+-]?([1-9]*\.[0-9]+)([eE][+-]?[0-9])?  return FLOAT;
+[+-]?[1-9]([eE][+-]?[0-9])?             return INTEGER;
+\"(\\\\|\\\"|[^\"])*\"                  return STRING;
+(true|false)                            return BOOLEAN;
 
-(func|val|if|else|while|for)    return KEYWORD;
-[A-Za-z_][A-Za-z0-9_]           return IDENTIFIER;
+(func|val|if|else|while|for)*           return KEYWORD;
+[_A-Za-z][_A-Za-z0-9]*                  return IDENTIFIER;
 
-.   return 0;
+[ \n\t]                                 ;
+.                                       printf("Error.\n");
 
 %%
 
