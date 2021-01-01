@@ -20,6 +20,22 @@
 "["                                     return LSQB;
 "]"                                     return RSQB;
 
+"+"                                     return PLUS;
+"-"                                     return MINUS;
+"*"                                     return MULTI;
+"/"                                     return SLASH;
+"|"                                     return VBAR;
+"&"                                     return AND;
+"."                                     return DOT;
+","                                     return COMMA;
+":"                                     return COLON;
+";"                                     return SEMICOLON;
+"="                                     return EQUAL;
+"=="                                    return ISEQUAL;
+"!="                                    return NOTEQUAL;
+"<"                                     return LESS;
+">"                                     return GREATER;
+
 [ \n\t]                                 ;
 .                                       printf("Error.\n");
 
