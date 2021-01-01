@@ -62,3 +62,34 @@ int getInt(char * name)
 
     return result;
 }
+
+void createFloat(char * name, float value, int builtIn)
+{
+    struct Object obj;
+
+    obj.valid = 1;
+    obj.type = TYPE_FLOAT;
+
+    strcpy(obj.name, name);
+    obj.builtIn = builtIn;
+    obj.floatValue = value;
+
+    mem.size++;
+    mem.memory[mem.size] = obj;
+}
+
+float getInt(char * name)
+{
+    int result;
+
+    for (int i = 0; i < mem.size; i++)
+    {
+        struct Object obj = mem.memory[i];
+        if (obj.name == name)
+        {
+            result = obj.floatValue;
+        }
+    }
+
+    return result;
+}
