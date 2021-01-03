@@ -38,6 +38,7 @@
 "<"                                     return LESS;
 ">"                                     return GREATER;
 
+\n                                      return NEWLINE;
 [ \n\t]                                 ;
 .                                       printf("Error.\n");
 

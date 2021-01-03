@@ -360,8 +360,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 31
-#define YY_END_OF_BUFFER 32
+#define YY_NUM_RULES 32
+#define YY_END_OF_BUFFER 33
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -371,7 +371,7 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[80] =
     {   0,
-        6,    6,   32,   30,   29,   29,   30,   30,   19,    8,
+        6,    6,   33,   31,   30,   29,   31,   31,   19,    8,
         9,   16,   14,   21,   15,   20,   17,    3,   22,   23,
        27,   24,   28,    7,   12,   13,    7,    7,    7,    7,
         7,    7,   10,   18,   11,   26,    0,    4,    0,    0,
@@ -926,19 +926,25 @@ case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
 #line 41 "Scanner/scanner.l"
-;
+return NEWLINE;
 	YY_BREAK
 case 30:
+/* rule 30 can match eol */
 YY_RULE_SETUP
 #line 42 "Scanner/scanner.l"
-printf("Error.\n");
+;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 44 "Scanner/scanner.l"
+#line 43 "Scanner/scanner.l"
+printf("Error.\n");
+	YY_BREAK
+case 32:
+YY_RULE_SETUP
+#line 45 "Scanner/scanner.l"
 ECHO;
 	YY_BREAK
-#line 942 "lex.yy.c"
+#line 948 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1935,7 +1941,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 44 "Scanner/scanner.l"
+#line 45 "Scanner/scanner.l"
 
 
 
