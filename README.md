@@ -2,7 +2,19 @@
     <img src="Assets/icon.png" width="100" height="80" draggable="false"><br/>
     <h1>The A programming language</h1>
     <code>A simple and fast programming language.</code>
-</div>
+</div><br/>
+
+```
+module main;
+
+func greet(name) {
+    val firstname = name.split()[0];
+    val message = "Hello %{ firstname }!";
+    println(message);
+}
+
+greet('John Doe');
+```
 
 ## Features
 * Easy: The simple syntax can be learned in only a few minutes.
