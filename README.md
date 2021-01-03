@@ -1,6 +1,7 @@
 <div align="center">
-    <img src="Assets/icon.png" width="100" height="80"><br/>
-    A simple and fast programming language.
+    <img src="Assets/icon.png" width="100" height="80" draggable="false"><br/>
+    <h1>The A programming language</h1>
+    <code>A simple and fast programming language.</code>
 </div>
 
 ## Features
