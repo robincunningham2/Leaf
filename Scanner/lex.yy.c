@@ -929,22 +929,21 @@ YY_RULE_SETUP
 return NEWLINE;
 	YY_BREAK
 case 30:
-/* rule 30 can match eol */
 YY_RULE_SETUP
 #line 42 "Scanner/scanner.l"
 ;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 43 "Scanner/scanner.l"
+#line 44 "Scanner/scanner.l"
 printf("Error.\n");
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 45 "Scanner/scanner.l"
+#line 46 "Scanner/scanner.l"
 ECHO;
 	YY_BREAK
-#line 948 "lex.yy.c"
+#line 947 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1941,7 +1940,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 45 "Scanner/scanner.l"
+#line 46 "Scanner/scanner.l"
 
 
 

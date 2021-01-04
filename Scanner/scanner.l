@@ -39,7 +39,8 @@
 ">"                                     return GREATER;
 
 \n                                      return NEWLINE;
-[ \n\t]                                 ;
+[ \t]                                   ;
+
 .                                       printf("Error.\n");
 
 %%
