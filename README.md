@@ -1,6 +1,6 @@
 <div align="center">
     <img src="Assets/icon.png" width="100" height="80" draggable="false"><br/>
-    <h1>The A programming language</h1>
+    <h1>The Leaf programming language</h1>
     <code>A simple and fast programming language.</code>
 </div><br/>
 
@@ -25,9 +25,9 @@ greet('John Doe');
 ## Installation
 Install using `git`:
 ```bash
-git clone https://github.com/robincunningham2/A.git
-cd A
+git clone https://github.com/robincunningham2/Leaf.git
+cd Leaf
 make
 ```
 
-Now, A can be found using the `./a` command.
+Now, A can be found using the `./leaf` command.
