@@ -7,12 +7,45 @@
         <title>The Leaf programming language</title>
     </head>
     <body>
-        <a href="/">
+        <a href="/leaf">
             <img class="icon" draggable="false" src="Assets/icon.png" alt="Leaf icon">
         </a>
-
         <div class="nav">
-
+            <a href="/docs.html">Documentation</a>
         </div>
+
+        <section class="top">
+            <h1>The Leaf programming language</h1>
+            A simple and fast programming language.
+
+            <div class="codeArea example">
+                <span class="token kw">func</span> <span class="token func">greet</span>(name) { <br/>
+                &nbsp;&nbsp;<span class="token func">println</span>(<span class="token str">"Hello </span><span class="token op">%{</span>name<span class="token op">}</span><span class="token str">!"</span>); <br/>
+                } <br/>
+                <br/>
+                <span class="token func">greet</span>(<span class="token str">"John"</span>); <br/>
+                <span class="token comment">// Hello John!</span>
+            </div>
+        </section>
+
+        <section class="item">
+            <h1>Easy to use</h1>
+            <p>
+                With Leaf's simple and <em>"basic"</em> syntax, it is really easy to learn the programming language.
+                Just read the <a href="docs.html">documentation</a> and in a few minutes, you have built your very first Leaf program up and running.
+            </p>
+            <p>
+                The Leaf programming language is also stored in one single binary file, so it can be installed without any dependencies.
+            </p>
+        </section>
+
+        <section class="item">
+            <h1>Peformance</h1>
+            <ul>
+                <li>As fast as C is</li>
+                <li>Compiles to human readable C and executes it in &lt; 1.s</li>
+                <li>Doesn't use up much memory or CPU</li>
+            </ul>
+        </section>
     </body>
 </html>
