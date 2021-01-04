@@ -8,6 +8,6 @@ compile:
 		Scanner/lex.yy.c \
 		Parser/memory.c \
 		Parser/parser.c \
-		-o ./a
+		-o ./leaf
 
-	@echo "\nA is installed!"
+	@echo "\nLeaf is installed!"
