@@ -6,8 +6,9 @@
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
 extern int yylex();
-extern YY_BUFFER_STATE yy_scan_buffer(char * base, int size);
+extern YY_BUFFER_STATE yy_scan_buffer(char * base);
 extern void init();
+extern void handleToken(int token);
 
 char * process;
 int lineno = -1;
@@ -44,12 +45,24 @@ void warn(char * content)
     printf("%s\n", content);
 }
 
-char * concat(char * s1, char * s2, char * s3)
+char * removeAll(char * str, const char toRemove)
 {
-    char * str = malloc(strlen(s1) + strlen(s2) + strlen(s3) + 1);
-    strcpy(str, s1);
-    strcat(str, s2);
-    strcat(str, s3);
+    int i, j;
+    int len = strlen(str);
+
+    for (i = 0; i < len; i++)
+    {
+        if (str[i] == toRemove)
+        {
+            for (j = i; j < len; j++)
+            {
+                str[j] = str[j + 1];
+            }
+
+            len--;
+            i--;
+        }
+    }
 
     return str;
 }
@@ -73,40 +86,45 @@ int main(int argc, char * argv[])
 
     fp = fopen(filename, "rb");
     if (!fp) {
-        return error("module error", concat("module '", filename, "' was not found."));
+        return error("module error", "module was not found.");
     }
 
     fseek(fp, 0L, SEEK_END);
     size = ftell(fp);
     rewind(fp);
 
-    buffer = malloc((size + 1) * sizeof(* buffer));
+    buffer = malloc((size + 2) * sizeof(* buffer));
     fread(buffer, size, 1, fp);
     buffer[size] = '\0';
+    buffer[size + 1] = '\0';
 
-    printf("%s\n", buffer);
+    buffer = removeAll(buffer, '\n');
 
-    yy_scan_buffer(buffer, sizeof(buffer));
+    yy_scan_buffer(buffer);
     process = argv[1];
     lineno = 1;
 
-    printf("1\n");
-
-    int token = yylex();
-
-    printf("%d\n", token);
-
+    int token;
+    token = 1;
     while (token)
     {
+        printf("Called\n");
+        token = yylex();
+        printf("Token: %d\n", token);
+        printf("Isnewline: %d\n", token == NEWLINE);
+
         if (token == NEWLINE)
         {
+            printf("newline\n");
             lineno++;
             continue;
         }
 
-        printf("%d\n", token);
-        token = yylex();
+        printf("Token: %d\n", token);
+        handleToken(token);
     }
+
+    printf("endded\n");
 
     return 0;
 }
