@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="Assets/icon.png" width="100" height="80" draggable="false"><br/>
+    <img src="Assets/icon.png" width="100" draggable="false"><br/>
     <h1>The Leaf programming language</h1>
     <code>A simple and fast programming language.</code>
 </div><br/>
