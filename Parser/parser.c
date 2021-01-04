@@ -1,9 +1,7 @@
+#include <stdio.h>
+#include "../Scanner/tokens.h"
 
-void parse(char ** tokens)
+void handleToken(int token)
 {
-    for (int i = 0; i < sizeof(tokens); i++)
-    {
-        char * token = tokens[i];
-        // Do something with the token
-    }
+    printf("%d\n", token);
 }
