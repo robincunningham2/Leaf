@@ -1,0 +1,24 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-decoration: none;
+    outline: none;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+img.icon {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    height: 15px;
+}
+
+div.nav {
+
+}
