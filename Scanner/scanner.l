@@ -1,6 +1,23 @@
 %{
     #include <stdlib.h>
     #include "tokens.h"
+
+    char * process = "test.lf";
+    int lno = -1;
+
+    void asdhjkasd(char * name)
+    {
+        printf("\033[1m"); // Bold
+        if (lno > 0)
+        {
+            printf("%s:%d: ", process, lno);
+        } else printf("%s: ", process);
+
+        printf("\033[0;31m"); // Red
+        printf("\033[1m"); // Bold
+        printf("%s: ", name);
+        printf("\033[0m"); // Reset
+    }
 %}
 
 %%
@@ -41,7 +58,10 @@
 \n                                      return NEWLINE;
 [ \t]                                   ;
 
-.                                       printf("Error.\n");
+.                                       {
+                                            asdhjkasd("syntax error");
+                                            printf("Invalid token '%s'", yytext);
+                                        }
 
 %%
 
