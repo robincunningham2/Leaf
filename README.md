@@ -27,7 +27,7 @@ Install using `git`:
 ```bash
 git clone https://github.com/robincunningham2/Leaf.git
 cd Leaf
-make
+make install
 ```
 
-Now, Leaf can be found using the `./leaf` command.
+Now, Leaf can be found using the `leaf` command.
