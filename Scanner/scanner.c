@@ -74,7 +74,7 @@ int main(int argc, char * argv[])
 
     if (argc < 2)
     {
-        warn("a file name must be included.\n    Usage:\n    $ a [file|command] [options]");
+        warn("a file name must be included.\n    Usage:\n    $ leaf [file|command] [options]");
     }
     
     FILE * fp;
