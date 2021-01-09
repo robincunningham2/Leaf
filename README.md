@@ -30,4 +30,4 @@ cd Leaf
 make
 ```
 
-Now, A can be found using the `./leaf` command.
+Now, Leaf can be found using the `./leaf` command.
