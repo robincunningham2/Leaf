@@ -3,14 +3,13 @@
     #include "tokens.h"
 
     char * process = "test.lf";
-    int lno = -1;
 
     void err(char * name)
     {
         printf("\033[1m"); // Bold
-        if (lno > 0)
+        if (yylineno > 0)
         {
-            printf("%s:%d: ", process, lno);
+            printf("%s:%d: ", process, yylineno);
         } else printf("%s: ", process);
 
         printf("\033[0;31m"); // Red
@@ -19,6 +18,8 @@
         printf("\033[0m"); // Reset
     }
 %}
+
+%option yylineno
 
 %%
 
@@ -55,8 +56,7 @@
 "<"                                     return LESS;
 ">"                                     return GREATER;
 
-\n                                      return NEWLINE;
-[ \t]                                   ;
+[ \n\t]                                 ;
 
 .                                       {
                                             err("syntax error");
