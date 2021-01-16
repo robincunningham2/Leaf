@@ -3,22 +3,25 @@
 #include <string.h>
 #include "tokens.h"
 
+#define yy_size_t size_t
+
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
+extern int yylineno;
 extern int yylex();
-extern YY_BUFFER_STATE yy_scan_buffer(char * base);
+extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
+extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
 extern void handleToken(int token);
 
 char * process;
-int lineno = -1;
 
 int error(char * name, char * content)
 {
     printf("\033[1m"); // Bold
-    if (lineno > 0)
+    if (yylineno > 0)
     {
-        printf("%s:%d: ", process, lineno);
+        printf("%s:%d: ", process, yylineno);
     } else printf("%s: ", process);
 
     printf("\033[0;31m"); // Red
@@ -33,9 +36,9 @@ int error(char * name, char * content)
 void warn(char * content)
 {
     printf("\033[1m"); // Bold
-    if (lineno > 0)
+    if (yylineno > 0)
     {
-        printf("%s:%d: ", process, lineno);
+        printf("%s:%d: ", process, yylineno);
     } else printf("%s: ", process);
 
     printf("\033[0;35m"); // Purple
@@ -43,28 +46,6 @@ void warn(char * content)
     printf("warning: ");
     printf("\033[0m"); // Reset
     printf("%s\n", content);
-}
-
-char * removeAll(char * str, const char toRemove)
-{
-    int i, j;
-    int len = strlen(str);
-
-    for (i = 0; i < len; i++)
-    {
-        if (str[i] == toRemove)
-        {
-            for (j = i; j < len; j++)
-            {
-                str[j] = str[j + 1];
-            }
-
-            len--;
-            i--;
-        }
-    }
-
-    return str;
 }
 
 int main(int argc, char * argv[])
@@ -93,38 +74,24 @@ int main(int argc, char * argv[])
     size = ftell(fp);
     rewind(fp);
 
-    buffer = malloc((size + 2) * sizeof(* buffer));
+    buffer = malloc((size) * sizeof(* buffer));
     fread(buffer, size, 1, fp);
     buffer[size] = '\0';
-    buffer[size + 1] = '\0';
 
-    buffer = removeAll(buffer, '\n');
+    printf("%s\n", buffer);
 
-    yy_scan_buffer(buffer);
+    YY_BUFFER_STATE buff = yy_scan_string(buffer);
     process = argv[1];
-    lineno = 1;
 
     int token;
-    token = 1;
+    token = yylex();
     while (token)
     {
-        printf("Called\n");
-        token = yylex();
-        printf("Token: %d\n", token);
-        printf("Isnewline: %d\n", token == NEWLINE);
-
-        if (token == NEWLINE)
-        {
-            printf("newline\n");
-            lineno++;
-            continue;
-        }
-
-        printf("Token: %d\n", token);
         handleToken(token);
+        token = yylex();
     }
 
-    printf("endded\n");
+    yy_delete_buffer(buff);
 
     return 0;
 }
