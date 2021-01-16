@@ -5,7 +5,7 @@
     char * process = "test.lf";
     int lno = -1;
 
-    void asdhjkasd(char * name)
+    void err(char * name)
     {
         printf("\033[1m"); // Bold
         if (lno > 0)
@@ -59,7 +59,7 @@
 [ \t]                                   ;
 
 .                                       {
-                                            asdhjkasd("syntax error");
+                                            err("syntax error");
                                             printf("Invalid token '%s'", yytext);
                                         }
 

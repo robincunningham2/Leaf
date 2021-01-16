@@ -516,7 +516,7 @@ char *yytext;
     char * process = "test.lf";
     int lno = -1;
 
-    void asdhjkasd(char * name)
+    void err(char * name)
     {
         printf("\033[1m"); // Bold
         if (lno > 0)
@@ -954,7 +954,7 @@ case 31:
 YY_RULE_SETUP
 #line 61 "Scanner/scanner.l"
 {
-                                            asdhjkasd("syntax error");
+                                            err("syntax error");
                                             printf("Invalid token '%s'", yytext);
                                         }
 	YY_BREAK
