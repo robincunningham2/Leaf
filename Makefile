@@ -20,5 +20,3 @@ compile:
 		Parser/memory.c \
 		Parser/parser.c \
 		-o ./leaf
-
-	@echo "\nLeaf is installed!"
