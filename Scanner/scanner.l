@@ -2,16 +2,18 @@
     #include <stdlib.h>
     #include "tokens.h"
 
-    char * process = "test.lf";
+    char * yyprocess;
 
     void err(char * name)
     {
         printf("\033[1m"); // Bold
         if (yylineno > 0)
         {
-            printf("%s:%d: ", process, yylineno);
-        } else printf("%s: ", process);
+            printf("%s:%d: ", yyprocess, yylineno);
+        } else printf("%s: ", yyprocess);
 
+        printf("\033[0m"); // Reset
+        printf("Uncaught ");
         printf("\033[0;31m"); // Red
         printf("\033[1m"); // Bold
         printf("%s: ", name);
@@ -23,7 +25,8 @@
 
 %%
 
-"/*"(.|\n)*"*/"                         ;
+\/\*(.|\n)*\*\/                         ;
+\/\/(.)*                                ;
 
 [+-]?([1-9]*\.[0-9]+)([eE][+-]?[0-9])?  return FLOAT;
 [+-]?[1-9]([eE][+-]?[0-9])?             return INTEGER;
@@ -56,11 +59,11 @@
 "<"                                     return LESS;
 ">"                                     return GREATER;
 
-[ \n\t]                                 ;
+[ \n\t]                                 ;                              
 
-.                                       {
-                                            err("syntax error");
-                                            printf("Invalid token '%s'", yytext);
+([^ \n\t\.]*|.)                         {
+                                            err("Syntax Error");
+                                            printf("Unexpected or invalid token: '%s'\n", yytext);
                                         }
 
 %%
@@ -69,3 +72,5 @@ int yywrap(void)
 {
     return 1;
 }
+
+char * yyprocess;

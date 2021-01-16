@@ -3,6 +3,9 @@
 #include <string.h>
 #include "tokens.h"
 
+#define TRUE  1
+#define FALSE 0
+
 #define yy_size_t size_t
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
@@ -13,37 +16,37 @@ extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
 extern void handleToken(int token);
+extern char * yyprocess;
 
-char * process;
+int active = FALSE;
 
-int error(char * name, char * content)
+void errorr(char * name)
 {
     printf("\033[1m"); // Bold
-    if (yylineno > 0)
+    if (active == TRUE)
     {
-        printf("%s:%d: ", process, yylineno);
-    } else printf("%s: ", process);
+        printf("%s:%d: ", yyprocess, yylineno);
+    }
 
+    printf("\033[0m"); // Reset
+    printf("Uncaught ");
     printf("\033[0;31m"); // Red
     printf("\033[1m"); // Bold
     printf("%s: ", name);
     printf("\033[0m"); // Reset
-    printf("%s\n", content);
-
-    return 1;
 }
 
 void warn(char * content)
 {
     printf("\033[1m"); // Bold
-    if (yylineno > 0)
+    if (active == TRUE)
     {
-        printf("%s:%d: ", process, yylineno);
-    } else printf("%s: ", process);
+        printf("%s:%d: ", yyprocess, yylineno);
+    }
 
     printf("\033[0;35m"); // Purple
     printf("\033[1m"); // Bold
-    printf("warning: ");
+    printf("Warning: ");
     printf("\033[0m"); // Reset
     printf("%s\n", content);
 }
@@ -51,7 +54,7 @@ void warn(char * content)
 int main(int argc, char * argv[])
 {
     init();
-    process = argv[0];
+    yyprocess = argv[0];
 
     if (argc < 2)
     {
@@ -67,7 +70,9 @@ int main(int argc, char * argv[])
 
     fp = fopen(filename, "rb");
     if (!fp) {
-        return error("module error", "module was not found.");
+        errorr("Module Error");
+        printf("module was not found.\n");
+        return 1;
     }
 
     fseek(fp, 0L, SEEK_END);
@@ -78,10 +83,9 @@ int main(int argc, char * argv[])
     fread(buffer, size, 1, fp);
     buffer[size] = '\0';
 
-    printf("%s\n", buffer);
-
     YY_BUFFER_STATE buff = yy_scan_string(buffer);
-    process = argv[1];
+    yyprocess = argv[1];
+    active = TRUE;
 
     int token;
     token = yylex();
