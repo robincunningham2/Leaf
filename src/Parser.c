@@ -6,26 +6,36 @@ extern int yylineno;
 extern char * yytext;
 extern void error(char * name);
 extern void warn(char * content);
+extern char * getTokenName(int token);
 
 typedef struct Token {
     int token;
     int lineno;
     char * str;
+    char * name;
 } Token;
 
-int expected = STRING;
+Token getToken(int token)
+{
+    Token result;
+    result.token = token;
+    result.lineno = yylineno;
+    result.str = yytext;
+    result.name = getTokenName(token);
+
+    return result;
+}
+
+int expected = AND;
 
 int handleToken(int token)
 {
-    Token t;
-    t.token = token;
-    t.lineno = yylineno;
-    t.str = yytext;
+    Token t = getToken(token);
 
     if (expected != NONE && t.token != expected)
     {
-        error("Unexpected Error");
-        printf("Expected '%d', got '%d'\n", expected, t.token);
+        error("Syntax Error");
+        printf("Expected %s, found %s\n", getTokenName(expected), t.name);
         return 1;
     }
 
