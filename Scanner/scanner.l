@@ -34,7 +34,7 @@
 (true|false)                            return BOOLEAN;
 
 (func|val|if|else|while|for)*           return KEYWORD;
-[_A-Za-z][_A-Za-z0-9]*                  return IDENTIFIER;
+[A-Za-z_][A-Za-z_0-9]*                  return IDENTIFIER;
 
 "("                                     return LPAR;
 ")"                                     return RPAR;
@@ -59,9 +59,9 @@
 "<"                                     return LESS;
 ">"                                     return GREATER;
 
-[ \n\t]                                 ;                              
+[ \n\t]                                 ;
 
-([^ \n\t\.]*|.)                         {
+.                                       {
                                             err("Syntax Error");
                                             printf("Unexpected or invalid token: '%s'\n", yytext);
                                         }
