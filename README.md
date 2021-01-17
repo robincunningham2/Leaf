@@ -1,7 +1,6 @@
 <div align="center">
-    <img src="assets/icon.png" width="100" draggable="false"><br/>
     <h1>The Leaf programming language</h1>
-    <code>A simple and fast programming language.</code>
+    A simple and fast programming language.
 </div><br/>
 
 ```
