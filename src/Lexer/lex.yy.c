@@ -989,14 +989,15 @@ YY_RULE_SETUP
 {
                                             err("Syntax Error");
                                             printf("Unexpected or invalid token: '%s'\n", yytext);
+                                            return ERROR;
                                         }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 69 "src/Lexer/lexer.l"
+#line 70 "src/Lexer/lexer.l"
 ECHO;
 	YY_BREAK
-#line 1000 "lex.yy.c"
+#line 1001 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2005,7 +2006,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 69 "src/Lexer/lexer.l"
+#line 70 "src/Lexer/lexer.l"
 
 
 

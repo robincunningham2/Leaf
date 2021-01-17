@@ -64,6 +64,7 @@
 .                                       {
                                             err("Syntax Error");
                                             printf("Unexpected or invalid token: '%s'\n", yytext);
+                                            return ERROR;
                                         }
 
 %%
