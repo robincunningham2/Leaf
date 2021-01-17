@@ -14,7 +14,7 @@ extern int yylex();
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
-extern void handleToken(int token);
+extern int handleToken(int token);
 extern char * yyprocess;
 extern int yylineno;
 extern char * yytext;
@@ -60,7 +60,7 @@ int main(int argc, char * argv[])
     yyprocess = argv[1];
     active = TRUE;
 
-    int token;
+    int token, code;
     token = yylex();
     while (token)
     {
@@ -70,7 +70,13 @@ int main(int argc, char * argv[])
             return 1;
         }
         
-        handleToken(token);
+        code = handleToken(token);
+        if (code != 0)
+        {
+            yy_delete_buffer(buff);
+            return code;
+        }
+
         token = yylex();
     }
 
