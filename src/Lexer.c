@@ -14,43 +14,14 @@ extern int yylex();
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
-extern void handleToken(int token, int yylineno, char * yytext);
+extern void handleToken(int token);
 extern char * yyprocess;
 extern int yylineno;
 extern char * yytext;
+extern void error(char * name);
+extern void warn(char * content);
 
 int active = FALSE;
-
-void errorr(char * name)
-{
-    printf("\033[1m"); // Bold
-    if (active == TRUE)
-    {
-        printf("%s:%d: ", yyprocess, yylineno);
-    }
-
-    printf("\033[0m"); // Reset
-    printf("Uncaught ");
-    printf("\033[0;31m"); // Red
-    printf("\033[1m"); // Bold
-    printf("%s: ", name);
-    printf("\033[0m"); // Reset
-}
-
-void warn(char * content)
-{
-    printf("\033[1m"); // Bold
-    if (active == TRUE)
-    {
-        printf("%s:%d: ", yyprocess, yylineno);
-    }
-
-    printf("\033[0;35m"); // Purple
-    printf("\033[1m"); // Bold
-    printf("Warning: ");
-    printf("\033[0m"); // Reset
-    printf("%s\n", content);
-}
 
 int main(int argc, char * argv[])
 {
@@ -72,7 +43,7 @@ int main(int argc, char * argv[])
     fp = fopen(filename, "rb");
     if (!fp)
     {
-        errorr("Module Error");
+        error("Module Error");
         printf("module was not found.\n");
         return 1;
     }
@@ -99,7 +70,7 @@ int main(int argc, char * argv[])
             return 1;
         }
         
-        handleToken(token, yylineno, yytext);
+        handleToken(token);
         token = yylex();
     }
 
