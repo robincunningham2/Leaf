@@ -69,7 +69,8 @@ int main(int argc, char * argv[])
     filename = argv[1];
 
     fp = fopen(filename, "rb");
-    if (!fp) {
+    if (!fp)
+    {
         errorr("Module Error");
         printf("module was not found.\n");
         return 1;
