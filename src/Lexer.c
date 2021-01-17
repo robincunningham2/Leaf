@@ -92,6 +92,12 @@ int main(int argc, char * argv[])
     token = yylex();
     while (token)
     {
+        if (token == ERROR)
+        {
+            yy_delete_buffer(buff);
+            return 1;
+        }
+        
         handleToken(token);
         token = yylex();
     }
