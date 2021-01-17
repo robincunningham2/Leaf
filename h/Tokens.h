@@ -1,6 +1,3 @@
-// Error
-#define ERROR       -1
-
 // Value types
 #define INTEGER     1
 #define FLOAT       2
@@ -35,3 +32,7 @@
 #define NOTEQUAL    25
 #define LESS        26
 #define GREATER     27
+
+// Other
+#define ERROR       -1
+#define NONE        0
