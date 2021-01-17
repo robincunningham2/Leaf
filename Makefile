@@ -8,6 +8,7 @@ install:
 	cc src/Lexer.c \
 		src/memory.c \
 		src/Parser.c \
+		src/Helper.c \
 		src/Lexer/lex.yy.c \
 		-o /usr/local/bin/leaf
 
@@ -18,5 +19,6 @@ compile:
 	cc src/Lexer.c \
 		src/memory.c \
 		src/Parser.c \
+		src/Helper.c \
 		src/Lexer/lex.yy.c \
 		-o ./leaf
