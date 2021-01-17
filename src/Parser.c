@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include "../h/Tokens.h"
 
-void handleToken(int token)
+typedef struct Token {
+    int token;
+    int lineno;
+    char * str;
+} Token;
+
+void handleToken(int token, int yylineno, char * yytext)
 {
-    printf("%d\n", token);
+    Token t;
+    t.token = token;
+    t.lineno = yylineno;
+    t.str = yytext;
+
+    // Do something
 }
