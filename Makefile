@@ -1,5 +1,5 @@
-all: compile
-.PHONY: compile install
+all: compile install
+.PHONY: compile install all
 
 install:
 	lex src/Lexer/lexer.l
