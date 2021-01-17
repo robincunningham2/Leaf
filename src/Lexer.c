@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tokens.h"
+#include "../h/Tokens.h"
 
 #define TRUE  1
 #define FALSE 0

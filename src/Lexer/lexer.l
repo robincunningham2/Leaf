@@ -1,6 +1,6 @@
 %{
     #include <stdlib.h>
-    #include "tokens.h"
+    #include "../../h/Tokens.h"
 
     char * yyprocess;
 
