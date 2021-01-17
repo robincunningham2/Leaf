@@ -1,3 +1,6 @@
+// Error
+#define ERROR       -1
+
 // Value types
 #define INTEGER     1
 #define FLOAT       2
