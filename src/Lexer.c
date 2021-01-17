@@ -10,13 +10,14 @@
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
-extern int yylineno;
 extern int yylex();
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
 extern void handleToken(int token);
 extern char * yyprocess;
+extern int yylineno;
+extern char * yytext;
 
 int active = FALSE;
 
