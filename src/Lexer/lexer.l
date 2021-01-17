@@ -4,21 +4,8 @@
 
     char * yyprocess;
 
-    void err(char * name)
-    {
-        printf("\033[1m"); // Bold
-        if (yylineno > 0)
-        {
-            printf("%s:%d: ", yyprocess, yylineno);
-        } else printf("%s: ", yyprocess);
-
-        printf("\033[0m"); // Reset
-        printf("Uncaught ");
-        printf("\033[0;31m"); // Red
-        printf("\033[1m"); // Bold
-        printf("%s: ", name);
-        printf("\033[0m"); // Reset
-    }
+    extern void error(char * name);
+    extern void warn(char * content);
 %}
 
 %option yylineno
@@ -62,7 +49,7 @@
 [ \n\t]                                 ;
 
 .                                       {
-                                            err("Syntax Error");
+                                            error("Syntax Error");
                                             printf("Unexpected or invalid token: '%s'\n", yytext);
                                             return ERROR;
                                         }
