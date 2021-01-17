@@ -5,7 +5,7 @@ install:
 	lex src/Lexer/lexer.l
 	@mv lex.yy.c src/Lexer/lex.yy.c
 	
-	cc src/Lexer.c \
+	gcc src/Lexer.c \
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
@@ -16,7 +16,7 @@ compile:
 	lex src/Lexer/lexer.l
 	@mv lex.yy.c src/Lexer/lex.yy.c
 	
-	cc src/Lexer.c \
+	gcc src/Lexer.c \
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
