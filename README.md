@@ -1,6 +1,8 @@
 <div align="center">
     <h1>The Leaf programming language</h1>
-    A simple and fast programming language.
+    <a href="https://www.patreon.com/robincunningham"><img src="https://badgejs.herokuapp.com/donate" alt="Donate"></a>
+    <a href="https://github.com/robincunningham2/Leaf/issues"><img src="https://badgejs.herokuapp.com/github/issues/robincunningham2/Leaf" alt="Donate"></a>
+    <a href="LICENSE"><img src="https://badgejs.herokuapp.com/badge/license/MIT/cyan" alt="Donate"></a>
 </div><br/>
 
 ```
