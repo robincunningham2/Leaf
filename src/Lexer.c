@@ -14,7 +14,7 @@ extern int yylex();
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_string(const char * str);
 extern void init();
-extern void handleToken(int token);
+extern void handleToken(int token, int yylineno, char * yytext);
 extern char * yyprocess;
 extern int yylineno;
 extern char * yytext;
@@ -99,7 +99,7 @@ int main(int argc, char * argv[])
             return 1;
         }
         
-        handleToken(token);
+        handleToken(token, yylineno, yytext);
         token = yylex();
     }
 
