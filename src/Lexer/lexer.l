@@ -6,6 +6,7 @@
 
     extern void error(char * name);
     extern void warn(char * content);
+    extern int exitProcess(int code);
 %}
 
 %option yylineno
@@ -51,6 +52,7 @@
 .                                       {
                                             error("Syntax Error");
                                             printf("Unexpected or invalid token: '%s'\n", yytext);
+                                            exitProcess(1);
                                             return ERROR;
                                         }
 

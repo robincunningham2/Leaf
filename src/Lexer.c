@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../h/Tokens.h"
-
-#define TRUE  1
-#define FALSE 0
+#include "../h/Helper.h"
 
 #define yy_size_t size_t
 
@@ -20,6 +18,7 @@ extern int yylineno;
 extern char * yytext;
 extern void error(char * name);
 extern void warn(char * content);
+extern int exitProcess(int code);
 
 int active = FALSE;
 
@@ -74,13 +73,12 @@ int main(int argc, char * argv[])
         if (code != 0)
         {
             yy_delete_buffer(buff);
-            return code;
+            return exitProcess(code);
         }
 
         token = yylex();
     }
 
     yy_delete_buffer(buff);
-
-    return 0;
+    return exitProcess(0);
 }
