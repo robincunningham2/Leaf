@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define TYPE_INT    1
-#define TYPE_FLOAT  2
-#define TYPE_STRING 3
-#define TYPE_BOOL   4
+#include "../h/Helper.h"
 
 typedef struct Object
 {
