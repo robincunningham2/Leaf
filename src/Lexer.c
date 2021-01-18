@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../h/Tokens.h"
 #include "../h/Helper.h"
+#include "../h/Version.h"
 
 #define yy_size_t size_t
 
@@ -19,6 +20,7 @@ extern char * yytext;
 extern void error(char * name);
 extern void warn(char * content);
 extern int exitProcess(int code);
+extern int startsWith(const char * pre, const char * str);
 
 int active = FALSE;
 
@@ -29,7 +31,20 @@ int main(int argc, char * argv[])
 
     if (argc < 2)
     {
-        warn("a file name must be included.\n    Usage:\n    $ leaf [file|command] [options]");
+        printf("Expected filename or options.\n    Usage:\n    $ leaf [file] [options]\n\n    Examples:\n    $ leaf main.lf\n    $ leaf main.lf --debug\n    $ leaf --version\n    $ leaf -v\n");
+        return 1;
+    }
+
+    if (argv[1][0] == '-')
+    {
+        char * option = argv[1];
+        if (strcmp(option, "-v") == 0
+            || strcmp(option, "--version") == 0)
+        {
+            printf("v%s\n", versionString);
+        }
+
+        return 0;
     }
     
     FILE * fp;
