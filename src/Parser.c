@@ -63,10 +63,22 @@ int valCallback(Token t)
         return 1;
     }
 
+    if (yylex() != SEMICOLON)
+    {
+        error("Syntax Error");
+        printf("Expected %s, found %s\n", getTokenName(SEMICOLON), value.name);
+        return 1;
+    }
+
     name.str = strtok(name.str, "=");
 
     actionValueCreate.name = name.str;
     actionValueCreate.val = getValueFromToken(value);
+
+    if (actionValueCreate.val.statusCode)
+    {
+        return actionValueCreate.val.statusCode;
+    }
 
     node.actionValueCreate = actionValueCreate;
 
