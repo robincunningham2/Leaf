@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <time.h>
+#include <assert.h>
+#include <string.h>
+#include <stdlib.h>
 #include "../h/Tokens.h"
-#define TRUE  1
-#define FALSE 0
+#include "../h/Helper.h"
 
 extern char * yyprocess;
 extern int yylineno;
@@ -70,4 +73,53 @@ void warn(char * content)
     printf("Warning: ");
     printf("\033[0m"); // Reset
     printf("%s\n", content);
+}
+
+int exitProcess(int code)
+{
+    time_t t = time(NULL);
+    struct tm * tm = localtime(&t);
+
+    char date[64];
+    assert(strftime(date, sizeof(date), "%c", tm));
+
+    printf("\nProcess exited with code %d at %s\n", code, date);
+
+    return code;
+}
+
+Token getToken(int token)
+{
+    Token result;
+    result.token = token;
+    result.lineno = yylineno;
+    result.str = yytext;
+    result.name = getTokenName(token);
+
+    return result;
+}
+
+Value getValueFromToken(Token val)
+{
+    Value result;
+    switch (val.token)
+    {
+        default:
+        case INTEGER:
+            result.type = TYPE_INT;
+            result.intValue = atoi(val.str);
+            break;
+        case FLOAT:
+            result.type = TYPE_FLOAT;
+            result.floatValue = atof(val.str);
+        case STRING:
+            result.type = TYPE_STRING;
+            result.stringValue = val.str;
+        case BOOLEAN:
+            result.type = TYPE_BOOL;
+            if (strcmp(val.str, "true") == 0) result.boolValue = 1;
+            else result.boolValue = 0;
+    }
+
+    return result;
 }
