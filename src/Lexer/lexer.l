@@ -13,48 +13,53 @@
 
 %%
 
-\/\*(.|\n)*\*\/                         ;
-\/\/(.)*                                ;
+\/\*(.|\n)*\*\/|\/\/(.)*                    { /* Ignore comments */ }
+[[:space:]]+                                { /* Ignore whitespaces */ }
 
-[+-]?([1-9]*\.[0-9]+)([eE][+-]?[0-9])?  return FLOAT;
-[+-]?[1-9]([eE][+-]?[0-9])?             return INTEGER;
-\"(\\\\|\\\"|[^\"])*\"                  return STRING;
-(true|false)                            return BOOLEAN;
+(\.[0-9]+|[0-9]+\.[0-9]*)([eE][+-]?[0-9]+)? { return FLOAT; }
+0|[1-9][0-9]*                               { return INTEGER; }
+\"(\\\\|\\\"|[^\\"])*\"                     { return STRING; }
+\"(\\\\|\\\"|[^\\"])*                       {
+                                                error("Syntax Error");
+                                                printf("Unterminated string literal\n");
+                                                exitProcess(1);
+                                                return ERROR;
+                                            }
 
-(func|val|if|else|while|for)*           return KEYWORD;
-[A-Za-z_][A-Za-z_0-9]*                  return IDENTIFIER;
+true|false                                  { return BOOLEAN; }
 
-"("                                     return LPAR;
-")"                                     return RPAR;
-"{"                                     return LBR;
-"}"                                     return RBR;
-"["                                     return LSQB;
-"]"                                     return RSQB;
+func|val|if|else|while|for                  { return KEYWORD; }
+[A-Za-z_][A-Za-z_0-9]*                      { return IDENTIFIER; }
 
-"+"                                     return PLUS;
-"-"                                     return MINUS;
-"*"                                     return MULTI;
-"/"                                     return SLASH;
-"|"                                     return VBAR;
-"&"                                     return AND;
-"."                                     return DOT;
-","                                     return COMMA;
-":"                                     return COLON;
-";"                                     return SEMICOLON;
-"="                                     return EQUAL;
-"=="                                    return ISEQUAL;
-"!="                                    return NOTEQUAL;
-"<"                                     return LESS;
-">"                                     return GREATER;
+"("                                         { return LPAR; }
+")"                                         { return RPAR; }
+"{"                                         { return LBR; }
+"}"                                         { return RBR; }
+"["                                         { return LSQB; }
+"]"                                         { return RSQB; }
 
-[ \n\t]                                 ;
+"+"                                         { return PLUS; }
+"-"                                         { return MINUS; }
+"*"                                         { return MULTI; }
+"/"                                         { return SLASH; }
+"|"                                         { return VBAR; }
+"&"                                         { return AND; }
+"."                                         { return DOT; }
+","                                         { return COMMA; }
+":"                                         { return COLON; }
+";"                                         { return SEMICOLON; }
+"="                                         { return EQUAL; }
+"=="                                        { return ISEQUAL; }
+"!="                                        { return NOTEQUAL; }
+"<"                                         { return LESS; }
+">"                                         { return GREATER; }
 
-.                                       {
-                                            error("Syntax Error");
-                                            printf("Unexpected or invalid token: '%s'\n", yytext);
-                                            exitProcess(1);
-                                            return ERROR;
-                                        }
+[^\(\)\{\}\[\]\.\,\:\;\=\<\>[:space:]]+     {
+                                                error("Syntax Error");
+                                                printf("Unexpected or invalid token: '%s'\n", yytext);
+                                                exitProcess(1);
+                                                return ERROR;
+                                            }
 
 %%
 
