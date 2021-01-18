@@ -22,7 +22,20 @@ extern void warn(char * content);
 extern int exitProcess(int code);
 extern int startsWith(const char * pre, const char * str);
 
-int active = FALSE;
+const char * help = "Usage: leaf [options] [ script.lf ] [argv] \n\
+       leaf [options] \n\
+\n\
+Examples: \n\
+    leaf test.lf \n\
+    leaf test.lf -d \n\
+    leaf -v \n\
+\n\
+Options: \n\
+    -h      --help          shows this message \n\
+    -v      --version       gets Leaf version \n\
+    -d      --debug         sets System.debug variable to true";
+
+int active = FALSE, debug = FALSE;
 
 int main(int argc, char * argv[])
 {
@@ -31,48 +44,77 @@ int main(int argc, char * argv[])
 
     if (argc < 2)
     {
-        printf("Expected filename or options.\n    Usage:\n    $ leaf [file] [options]\n\n    Examples:\n    $ leaf main.lf\n    $ leaf main.lf --debug\n    $ leaf --version\n    $ leaf -v\n");
-        return 1;
-    }
-
-    if (argv[1][0] == '-')
-    {
-        char * option = argv[1];
-        if (strcmp(option, "-v") == 0
-            || strcmp(option, "--version") == 0)
-        {
-            printf("v%s\n", versionString);
-        }
-
+        printf("%s\n", help);
         return 0;
     }
-    
+
     FILE * fp;
     char * filename;
     long size;
     char * buffer;
+    YY_BUFFER_STATE buff;
 
-    filename = argv[1];
-
-    fp = fopen(filename, "rb");
-    if (!fp)
+    for (int i = 1; i < argc; i++)
     {
-        error("Module Error");
-        printf("module was not found.\n");
-        return 1;
+        printf("1\n");
+        printf("I: %d\n", i);
+
+        char * arg = argv[i];
+        if (argv[i][0] == '-')
+        {
+            if (strcmp(arg, "-h") == 0
+                || strcmp(arg, "--help") == 0)
+            {
+                printf("%s\n", help);
+            } else if (strcmp(arg, "-v") == 0
+                || strcmp(arg, "--version") == 0)
+            {
+                printf("v%s\n", versionString);
+            } else if (strcmp(arg, "-d") == 0
+                || strcmp(arg, "--debug") == 0)
+            {
+                printf("* Debug is enabled!\n");
+                debug = TRUE;
+                printf("1\n");
+            } else warn("Option not found");
+
+            printf("1\n");
+            i++;
+            printf("1\n");
+            continue;
+            printf("1\n");
+        }
+
+        printf("1\n");
+
+        if (active == TRUE)
+        {
+            i++;
+            continue;
+        }
+
+        filename = arg;
+
+        fp = fopen(filename, "rb");
+        if (!fp)
+        {
+            error("Module Error");
+            printf("module was not found.\n");
+            return 1;
+        }
+
+        fseek(fp, 0L, SEEK_END);
+        size = ftell(fp);
+        rewind(fp);
+
+        buffer = malloc((size) * sizeof(* buffer));
+        fread(buffer, size, 1, fp);
+        buffer[size] = '\0';
+
+        buff = yy_scan_string(buffer);
+        yyprocess = argv[1];
+        active = TRUE;
     }
-
-    fseek(fp, 0L, SEEK_END);
-    size = ftell(fp);
-    rewind(fp);
-
-    buffer = malloc((size) * sizeof(* buffer));
-    fread(buffer, size, 1, fp);
-    buffer[size] = '\0';
-
-    YY_BUFFER_STATE buff = yy_scan_string(buffer);
-    yyprocess = argv[1];
-    active = TRUE;
 
     int token, code;
     token = yylex();
