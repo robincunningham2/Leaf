@@ -10,7 +10,7 @@ both:
 		src/Parser.c \
 		src/Helper.c \
 		src/Lexer/lex.yy.c \
-		-o ./leaf
+		-o ./leaf -Wno-return-type
 	
 	cp ./leaf /usr/local/bin/leaf
 
@@ -23,7 +23,7 @@ install:
 		src/Parser.c \
 		src/Helper.c \
 		src/Lexer/lex.yy.c \
-		-o /usr/local/bin/leaf
+		-o /usr/local/bin/leaf -Wno-return-type
 
 compile:
 	lex src/Lexer/lexer.l
@@ -34,4 +34,4 @@ compile:
 		src/Parser.c \
 		src/Helper.c \
 		src/Lexer/lex.yy.c \
-		-o ./leaf
+		-o ./leaf -Wno-return-type
