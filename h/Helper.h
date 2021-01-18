@@ -17,6 +17,7 @@ typedef struct Token {
 } Token;
 
 typedef struct Value {
+    int statusCode;
     int type;
     int intValue;
     float floatValue;
