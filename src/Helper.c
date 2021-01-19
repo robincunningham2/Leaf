@@ -46,29 +46,19 @@ char * getTokenName(int token)
 
 void error(char * name)
 {
-    printf("\033[1m"); // Bold
-    if (active == TRUE)
-    {
-        printf("%s:%d: ", yyprocess, yylineno);
-    }
+    char * filename = realpath(yyprocess, NULL);
 
-    printf("\033[0m"); // Reset
+    if (active == TRUE) printf("\n%s:%d:\n", filename, yylineno);
     printf("Uncaught ");
-    printf("\033[0;31m"); // Red
     printf("\033[1m"); // Bold
     printf("%s: ", name);
     printf("\033[0m"); // Reset
+
+    free(filename);
 }
 
 void warn(char * content)
 {
-    printf("\033[1m"); // Bold
-    if (active == TRUE)
-    {
-        printf("%s:%d: ", yyprocess, yylineno);
-    }
-
-    printf("\033[0;35m"); // Purple
     printf("\033[1m"); // Bold
     printf("Warning: ");
     printf("\033[0m"); // Reset
