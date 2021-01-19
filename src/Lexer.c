@@ -56,40 +56,34 @@ int main(int argc, char * argv[])
 
     for (int i = 1; i < argc; i++)
     {
-        printf("1\n");
-        printf("I: %d\n", i);
-
         char * arg = argv[i];
-        if (argv[i][0] == '-')
+        if (arg[0] == '-')
         {
             if (strcmp(arg, "-h") == 0
                 || strcmp(arg, "--help") == 0)
             {
                 printf("%s\n", help);
+                return 0;
             } else if (strcmp(arg, "-v") == 0
                 || strcmp(arg, "--version") == 0)
             {
                 printf("v%s\n", versionString);
+                return 0;
             } else if (strcmp(arg, "-d") == 0
                 || strcmp(arg, "--debug") == 0)
             {
-                printf("* Debug is enabled!\n");
                 debug = TRUE;
-                printf("1\n");
+                printf("\033[37;2m");
+                printf("* Debug mode is enabled!\n");
+                printf("\033[0m");
             } else warn("Option not found");
 
-            printf("1\n");
-            i++;
-            printf("1\n");
+            if (i == argc - 1) return 0;
             continue;
-            printf("1\n");
         }
-
-        printf("1\n");
 
         if (active == TRUE)
         {
-            i++;
             continue;
         }
 
