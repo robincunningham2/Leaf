@@ -78,6 +78,14 @@ int exitProcess(int code)
     return code;
 }
 
+char * parseString(char * str)
+{
+    str[strlen(str) - 2] = '\0';
+    str++;
+
+    return str;
+}
+
 Token getToken(int token)
 {
     Token result;
