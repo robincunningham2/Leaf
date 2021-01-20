@@ -28,7 +28,7 @@
 
 true|false                                  { return BOOLEAN; }
 
-func|val|if|else|while|for                  { return KEYWORD; }
+module|func|val|if|else|while|for           { return KEYWORD; }
 [A-Za-z_][A-Za-z_0-9]*                      { return IDENTIFIER; }
 
 "("                                         { return LPAR; }
