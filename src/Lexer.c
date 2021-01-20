@@ -57,6 +57,16 @@ int main(int argc, char * argv[])
 
     for (int i = 1; i < argc; i++)
     {
+        if (processargc < 16)
+        {
+            processargv[processargc] = arg;
+            processargc++;
+        } else if (maxargv == FALSE)
+        {
+            warn("Leaf modules can only accept 16 args at the moment.");
+            maxargv = TRUE;
+        }
+
         char * arg = argv[i];
         if (arg[0] == '-')
         {
@@ -77,7 +87,7 @@ int main(int argc, char * argv[])
                 printf("\033[37;2m");
                 printf("* Debug mode is enabled!\n");
                 printf("\033[0m");
-            } else warn("Option not found");
+            }
 
             if (i == argc - 1 && active == FALSE) return 0;
             continue;
@@ -85,16 +95,6 @@ int main(int argc, char * argv[])
 
         if (active == TRUE)
         {
-            if (processargc < 16)
-            {
-                processargv[processargc] = arg;
-                processargc++;
-            } else if (maxargv == FALSE)
-            {
-                warn("Leaf modules can only accept 16 args at the moment.");
-                maxargv = TRUE;
-            }
-
             continue;
         }
 
