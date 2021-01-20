@@ -12,6 +12,8 @@ extern void warn(char * content);
 extern char * getTokenName(int token);
 extern Token getToken(int token);
 extern Value getValueFromToken(Token val);
+extern char * parseString(char * str);
+extern Token getToken(int token);
 
 typedef struct ActionValueCreate {
     char * name;
@@ -26,7 +28,36 @@ typedef struct ActionNode {
 int i = 0;
 ActionNode actionTree[16] = {};
 
-int expected, i;
+int expected, i, c;
+char * module;
+
+int moduleCallback(Token t)
+{
+    Token moduleName = getToken(yylex());
+    if (moduleName.token != IDENTIFIER && moduleName.token != STRING)
+    {
+        error("Syntax Error");
+        printf("Expected %s or %s, found %s\n", getTokenName(IDENTIFIER),
+            getTokenName(STRING), moduleName.name);
+        return 1;
+    }
+
+    Token next = getToken(yylex());
+    if (next.token != SEMICOLON)
+    {
+        error("Syntax Error");
+        printf("Expected %s, found %s\n", getTokenName(SEMICOLON), next.name);
+        return 1;
+    }
+
+    if (moduleName.str[0] == '"')
+    {
+        module = parseString(moduleName.str);
+    } else module = moduleName.str;
+
+    c++;
+    return 0;
+}
 
 int valCallback(Token t)
 {
@@ -99,8 +130,16 @@ int handleToken(int token)
         return 1;
     }
 
+    if (c == 0 && (t.token != KEYWORD || strcmp(t.str, "module") != 0))
+    {
+        error("Syntax Error");
+        printf("Expected '%s' at start of file, found '%s'\n", "module", t.str);
+        return 1;
+    }
+
     if (t.token == KEYWORD)
     {
+        if (strcmp(t.str, "module") == 0) return moduleCallback(t);
         if (strcmp(t.str, "func") == 0) warn("func.");
         if (strcmp(t.str, "val") == 0) return valCallback(t);
         if (strcmp(t.str, "if") == 0) warn("if.");
@@ -109,5 +148,6 @@ int handleToken(int token)
         if (strcmp(t.str, "for") == 0) warn("for.");
     }
 
+    c++;
     return 0;
 }
