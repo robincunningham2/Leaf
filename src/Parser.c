@@ -3,9 +3,6 @@
 #include "../h/Tokens.h"
 #include "../h/Helper.h"
 
-extern char * yyprocess;
-extern int yylineno;
-extern char * yytext;
 extern int yylex();
 extern void error(char * name);
 extern void warn(char * content);
