@@ -25,11 +25,6 @@ typedef struct Memory
 
 struct Memory mem;
 
-void init()
-{
-    mem.size = 0;
-}
-
 void createInt(char * name, int value, int builtIn)
 {
     struct Object obj;
