@@ -2,8 +2,6 @@
     #include <stdlib.h>
     #include "../../h/Tokens.h"
 
-    char * yyprocess;
-
     extern void error(char * name);
     extern void warn(char * content);
     extern int exitProcess(int code);
@@ -67,5 +65,3 @@ int yywrap(void)
 {
     return 1;
 }
-
-char * yyprocess;
