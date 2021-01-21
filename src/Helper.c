@@ -6,7 +6,8 @@
 #include "../h/Tokens.h"
 #include "../h/Helper.h"
 
-extern char * yyprocess;
+extern Process Main;
+
 extern int yylineno;
 extern char * yytext;
 extern int active;
@@ -46,15 +47,11 @@ char * getTokenName(int token)
 
 void error(char * name)
 {
-    char * filename = realpath(yyprocess, NULL);
-
-    if (active == TRUE) printf("\n%s:%d:\n", filename, yylineno);
+    if (active == TRUE) printf("\n%s:%d:\n", Main.absolute, yylineno);
     printf("Uncaught ");
     printf("\033[1m"); // Bold
     printf("%s: ", name);
     printf("\033[0m"); // Reset
-
-    free(filename);
 }
 
 void warn(char * content)
