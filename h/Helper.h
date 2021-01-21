@@ -24,3 +24,12 @@ typedef struct Value {
     char * stringValue;
     int boolValue;
 } Value;
+
+typedef struct Process {
+    char * version;
+    char * module;
+    char ** argv;
+    int argc;
+    char * filepath;
+    char * absolute;
+} Process;
