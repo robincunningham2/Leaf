@@ -10,6 +10,7 @@ both:
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
+		src/Array.c \
 		src/Lexer/lex.yy.c \
 		-o ./leaf -Wno-return-type
 	
@@ -24,6 +25,7 @@ install:
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
+		src/Array.c \
 		src/Lexer/lex.yy.c \
 		-o /usr/local/bin/leaf -Wno-return-type
 
@@ -36,5 +38,6 @@ compile:
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
+		src/Array.c \
 		src/Lexer/lex.yy.c \
 		-o ./leaf -Wno-return-type
