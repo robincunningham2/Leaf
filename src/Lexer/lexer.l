@@ -55,7 +55,6 @@ module|func|val|if|else|while|for           { return KEYWORD; }
 [^\(\)\{\}\[\]\.\,\:\;\=\<\>[:space:]]+     {
                                                 error("Syntax Error");
                                                 printf("Unexpected or invalid token: '%s'\n", yytext);
-                                                exitProcess(1);
                                                 return ERROR;
                                             }
 
