@@ -4,7 +4,7 @@ all: both
 both:
 	lex src/Lexer/lexer.l
 	@mv lex.yy.c src/Lexer/lex.yy.c
-	
+
 	gcc src/Main.c \
 		src/Lexer.c \
 		src/memory.c \
@@ -18,7 +18,7 @@ both:
 install:
 	lex src/Lexer/lexer.l
 	@mv lex.yy.c src/Lexer/lex.yy.c
-	
+
 	gcc src/Main.c \
 		src/Lexer.c \
 		src/memory.c \
@@ -30,7 +30,7 @@ install:
 compile:
 	lex src/Lexer/lexer.l
 	@mv lex.yy.c src/Lexer/lex.yy.c
-	
+
 	gcc src/Main.c \
 		src/Lexer.c \
 		src/memory.c \
