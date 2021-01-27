@@ -31,6 +31,7 @@ char * module;
 int moduleCallback(Token t)
 {
     Token moduleName = getToken(yylex());
+    if (moduleName.token == ERROR) return 1;
     if (moduleName.token != IDENTIFIER && moduleName.token != STRING)
     {
         error("Syntax Error");
@@ -40,6 +41,7 @@ int moduleCallback(Token t)
     }
 
     Token next = getToken(yylex());
+    if (next.token == ERROR) return 1;
     if (next.token != SEMICOLON)
     {
         error("Syntax Error");
@@ -64,6 +66,7 @@ int valCallback(Token t)
     ActionValueCreate actionValueCreate;
 
     Token name = getToken(yylex());
+    if (name.token == ERROR) return 1;
     if (name.token != IDENTIFIER)
     {
         error("Syntax Error");
@@ -72,6 +75,7 @@ int valCallback(Token t)
     }
 
     Token equals = getToken(yylex());
+    if (equals.token == ERROR) return 1;
     if (equals.token != EQUAL)
     {
         error("Syntax Error");
@@ -80,6 +84,7 @@ int valCallback(Token t)
     }
 
     Token value = getToken(yylex());
+    if (value.token == ERROR) return 1;
     if (value.token != INTEGER
         && value.token != FLOAT
         && value.token != STRING
@@ -91,10 +96,12 @@ int valCallback(Token t)
         return 1;
     }
 
-    if (yylex() != SEMICOLON)
+    Token next = getToken(yylex());
+    if (next.token == ERROR) return 1;
+    if (next.token != SEMICOLON)
     {
         error("Syntax Error");
-        printf("Expected %s, found %s\n", getTokenName(SEMICOLON), value.name);
+        printf("Expected %s, found %s\n", getTokenName(SEMICOLON), next.name);
         return 1;
     }
 
@@ -119,6 +126,7 @@ int valCallback(Token t)
 int handleToken(int token)
 {
     Token t = getToken(token);
+    if (t.token == ERROR) return 1;
 
     if (expected && t.token != expected)
     {
