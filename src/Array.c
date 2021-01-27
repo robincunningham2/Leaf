@@ -13,7 +13,7 @@ void createArray(Array * a, size_t initialSize) {
     a -> size = initialSize;
 }
 
-void insertToArray(Array * a, int element) {
+void insertToArray(Array * a, char * element) {
     if (a -> used == a -> size) {
         a -> size *= 2;
         a -> array = realloc(a -> array,
