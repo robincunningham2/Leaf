@@ -54,6 +54,13 @@ int moduleCallback(Token t)
         module = parseString(moduleName.str);
     } else module = moduleName.str;
 
+    if (strstr(module, "/") != NULL)
+    {
+        error("Syntax Error");
+        printf("Module cannot contain %s\n", getTokenName(SLASH));
+        return 1;
+    }
+
     c++;
     return 0;
 }
