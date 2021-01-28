@@ -63,6 +63,10 @@ int main(int argc, char * argv[])
                 printf("\033[37;2m");
                 printf("* Debug mode is enabled!\n");
                 printf("\033[0m");
+            } else if (active == FALSE)
+            {
+                printf("leaf: bad option: %s\n", arg);
+                return 1;
             }
 
             if (i == argc - 1 && active == FALSE) return 0;
