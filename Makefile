@@ -28,8 +28,7 @@ endif
 .PHONY: check all
 
 all: check
-	lex src/Lexer/lexer.l
-	$(MV) lex.yy.c src/Lexer/lex.yy.c
+	cd src/Lexer/ && lex lexer.l
 
 ifeq ($(_OS),Windows)
 	$(CC) -std=c99 -o $(LEAF) $(FILES) -Wno-return-type
