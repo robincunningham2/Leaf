@@ -1,6 +1,6 @@
-_OS		?=
-CC		?= cc
-MV		?= mv
+_OS	?=
+CC	?= cc
+MV	?= mv
 LEAF	?= ./leaf
 FILES	?= src/Main.c \
 			src/Lexer.c \
