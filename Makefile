@@ -1,6 +1,5 @@
 _OS	?=
 CC	?= cc
-MV	?= mv
 LEAF	?= ./leaf
 FILES	?= src/Main.c \
 		src/Lexer.c \
@@ -22,7 +21,6 @@ endif
 ifeq ($(_OS),Windows)
 	CC := gcc.exe
 	LEAF := ./leaf.exe
-	MV := move
 endif
 
 .PHONY: check all
