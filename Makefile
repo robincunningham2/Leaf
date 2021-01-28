@@ -3,12 +3,12 @@ CC	?= cc
 MV	?= mv
 LEAF	?= ./leaf
 FILES	?= src/Main.c \
-			src/Lexer.c \
-			src/memory.c \
-			src/Parser.c \
-			src/Helper.c \
-			src/Array.c \
-			src/Lexer/lex.yy.c
+		src/Lexer.c \
+		src/memory.c \
+		src/Parser.c \
+		src/Helper.c \
+		src/Array.c \
+		src/Lexer/lex.yy.c
 
 FLEX	:= $(shell command -v lex 2> /dev/null)
 COMP	:= $(shell command -v $(CC) 2> /dev/null)
