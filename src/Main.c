@@ -65,7 +65,7 @@ int main(int argc, char * argv[])
                 printf("\033[0m");
             } else if (active == FALSE)
             {
-                printf("leaf: bad option: %s\n", arg);
+                printf("%s: bad option: %s\n", argv[0], arg);
                 return 1;
             }
 
