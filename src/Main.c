@@ -9,6 +9,8 @@ Process Main;
 extern int lexer(char * buffer);
 extern void error(char * name);
 extern void warn(char * content);
+extern int parseModuleFile();
+extern int exitProcess(int code);
 
 const char * help = "Usage: leaf [options] [ script.lf ] [argv] \n\
        leaf [options] \n\
@@ -98,6 +100,9 @@ int main(int argc, char * argv[])
         buffer[size] = '\0';
         active = TRUE;
     }
+
+    int code = parseModuleFile();
+    if (code) return exitProcess(code);
 
     return lexer(buffer);
 }
