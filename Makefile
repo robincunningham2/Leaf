@@ -1,16 +1,20 @@
 _OS	?=
 CC	?= cc
 LEAF	?= ./leaf
+CFLAGS	?=
 FILES	?= src/Main.c \
 		src/Lexer.c \
 		src/memory.c \
 		src/Parser.c \
 		src/Helper.c \
 		src/Array.c \
+		src/Module.c \
 		src/Lexer/lex.yy.c
 
 FLEX	:= $(shell command -v lex 2> /dev/null)
 COMP	:= $(shell command -v $(CC) 2> /dev/null)
+
+CFLAGS += -ljson-c
 
 ifeq ($(OS),Windows_NT)
     _OS := Windows
@@ -29,9 +33,9 @@ all: check
 	cd src/Lexer/ && lex lexer.l
 
 ifeq ($(_OS),Windows)
-	$(CC) -std=c99 -o $(LEAF) $(FILES) -Wno-return-type
+	$(CC) $(CFLAGS) -std=c99 -o $(LEAF) $(FILES) -Wno-return-type
 else
-	$(CC) -std=gnu99 -o $(LEAF) $(FILES) -Wno-return-type
+	$(CC) $(CFLAGS) -std=gnu99 -o $(LEAF) $(FILES) -Wno-return-type
 endif
 
 	@echo "\nLeaf `$(LEAF) -v` has been built successfully"
