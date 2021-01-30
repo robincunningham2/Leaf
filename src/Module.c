@@ -52,9 +52,9 @@ int checkDir(int i)
     else return 1;
 }
 
-int invalidType(const char * filepath, char * field, char * expected)
+int invalidType(char * path, char * field, char * expected)
 {
-    printf("%s: Invalid type for field '%s'. Expected %s\n", filepath, field, expected);
+    printf("%s:\nInvalid type in field '%s', expected %s\n", path, field, expected);
     return 1;
 }
 
@@ -73,7 +73,7 @@ int parseModuleFile()
     char * suffix;
     int i = 0;
 
-    while (!fp)
+    while (!fp || !i)
     {
         suffix = repeat(i, "../");
         if (strlen(suffix) == 0) suffix = repeat(1, "./");
@@ -82,11 +82,7 @@ int parseModuleFile()
         char * abs = realpath(filepath, NULL);
         fp = fopen(abs, "rb");
 
-        if (fp)
-        {
-            final = malloc(strlen(abs) + 1);
-            strcpy(final, abs);
-        }
+        if (fp) final = abs;
 
         if (
             abs == "C:/"
