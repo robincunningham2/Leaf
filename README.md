@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>The Leaf programming language</h1>
+    <h1>Leaf</h1>
     <a href="https://www.patreon.com/robincunningham"><img src="https://badgejs.herokuapp.com/donate" alt="Donate"></a>
     <a href="https://github.com/robincunningham2/Leaf/issues"><img src="https://badgejs.herokuapp.com/github/issues/robincunningham2/Leaf" alt="Donate"></a>
     <a href="LICENSE"><img src="https://badgejs.herokuapp.com/badge/license/MIT/cyan" alt="Donate"></a>
@@ -16,6 +16,8 @@ func greet(name) {
 
 greet('John Doe');
 ```
+
+**DISCLAIMER:** Leaf is in development, and is not ready for production _yet_.
 
 ## Features
 * Easy: The simple syntax can be learned in only a few minutes.
