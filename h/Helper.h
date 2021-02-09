@@ -36,15 +36,36 @@
 #define token_less      24
 #define token_greater   25
 
-typedef struct {
+#define type_float  1
+#define type_int    2
+#define type_string 3
+#define type_bool   4
+
+#ifndef HELPER_H
+#define HELPER_H
+
+typedef struct
+{
+    int type;
+    char * value;
+} value_t;
+
+typedef struct
+{
     int _success;
     int type;
     int lineno;
     char * text;
 } token_t;
 
-char * getTokenName(token_t token);
 char * concat(char * s1, char * s2, char * s3);
+char * valueToString(value_t value);
 
-int error(char * type, char * content);
+char * getTokenName(token_t token);
+
+int thrw(char * type, char * content);
 void warn(char * content);
+
+int ext(int code);
+
+#endif
