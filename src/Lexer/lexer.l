@@ -1,62 +1,78 @@
 %{
-    #include <stdlib.h>
-    #include "../../h/Tokens.h"
+    #include <stdio.h>
+    #include "../../h/Helper.h"
 
-    extern void error(char * name);
-    extern void warn(char * content);
-    extern int exitProcess(int code);
+    token_t createToken(int token)
+    {
+        token_t result;
+        result._success = TRUE;
+        if (token == error)
+            result._success = FALSE;
+        
+        result.token = token;
+        result.lineno = yylineno;
+        result.text = yytext;
+
+        return result;
+    }
 %}
 
-%option yylineno
+str     \"(\\\\|\\\"|[^\\"])*
+float   (\.[0-9]+|[0-9]+\.[0-9]*)([eE][+-]?[[0-9]+)?
+i       0-9
+id      A-Za-z_
+keyword module|func|val|if|else|while|for
+
+comment \/\*(.|\n)*\*\/|\/\/(.)*
+error   [^\(\)\{\}\[\]\.\,\:\;\=\<\>[:space:]]+
 
 %%
 
-\/\*(.|\n)*\*\/|\/\/(.)*                    { /* Ignore comments */ }
-[[:space:]]+                                { /* Ignore whitespaces */ }
+{comment}           { /* Ignore comments */ }
+[[:space:]]+        { /* Ignore whitespaces */ }
 
-(\.[0-9]+|[0-9]+\.[0-9]*)([eE][+-]?[0-9]+)? { return FLOAT; }
-0|[1-9][0-9]*                               { return INTEGER; }
-\"(\\\\|\\\"|[^\\"])*\"                     { return STRING; }
-\"(\\\\|\\\"|[^\\"])*                       {
-                                                error("Syntax Error");
-                                                printf("Unterminated string literal\n");
-                                                exitProcess(1);
-                                                return ERROR;
-                                            }
+{float}             { return createToken(token_float); }
+0|[1-9][{i}]*       { return createToken(token_int); }
+true|false          { return createToken(token_bool); }
+{str}\"             { return createToken(token_string); }
+{str}*              {
+                        error("Syntax Error");
+                        printf("Unterminated string literal\n");
+                        exitProcess(1);
+                        return ERROR;
+                    }
 
-true|false                                  { return BOOLEAN; }
+{keyword}           { return createToken(token_keyword); }
+[{id}][{id}{i}]*    { return createToken(token_id); }
 
-module|func|val|if|else|while|for           { return KEYWORD; }
-[A-Za-z_][A-Za-z_0-9]*                      { return IDENTIFIER; }
+"("                 { return createToken(token_lpar); }
+")"                 { return createToken(token_rpar); }
+"["                 { return createToken(token_lsqb); }
+"]"                 { return createToken(token_rsqb); }
 
-"("                                         { return LPAR; }
-")"                                         { return RPAR; }
-"{"                                         { return LBR; }
-"}"                                         { return RBR; }
-"["                                         { return LSQB; }
-"]"                                         { return RSQB; }
+"+"                 { return createToken(token_plus); }
+"-"                 { return createToken(token_minus); }
+"*"                 { return createToken(token_multi); }
+"/"                 { return createToken(token_slash); }
 
-"+"                                         { return PLUS; }
-"-"                                         { return MINUS; }
-"*"                                         { return MULTI; }
-"/"                                         { return SLASH; }
-"|"                                         { return VBAR; }
-"&"                                         { return AND; }
-"."                                         { return DOT; }
-","                                         { return COMMA; }
-":"                                         { return COLON; }
-";"                                         { return SEMICOLON; }
-"="                                         { return EQUAL; }
-"=="                                        { return ISEQUAL; }
-"!="                                        { return NOTEQUAL; }
-"<"                                         { return LESS; }
-">"                                         { return GREATER; }
+"|"                 { return createToken(token_vbar); }
+"&"                 { return createToken(token_and); }
+"."                 { return createToken(token_dot); }
+","                 { return createToken(token_comma); }
+":"                 { return createToken(token_colon); }
+";"                 { return createToken(token_semicolon; }
 
-[^\(\)\{\}\[\]\.\,\:\;\=\<\>[:space:]]+     {
-                                                error("Syntax Error");
-                                                printf("Unexpected or invalid token: '%s'\n", yytext);
-                                                return ERROR;
-                                            }
+"="                 { return createToken(token_equal); }
+"=="                { return createToken(token_isequal); }
+"!="                { return createToken(token_notequal); }
+"<"                 { return createToken(token_less); }
+">"                 { return createToken(token_greater); }
+
+{error}             {
+                        error("Syntax Error");
+                        printf("Unexpected or invalid token: '%s'\n", yytext);
+                        return ERROR;
+                    }
 
 %%
 
