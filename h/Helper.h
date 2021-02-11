@@ -70,6 +70,7 @@ char * concat(char * s1, char * s2, char * s3);
 char * getTokenName(token_t token);
 
 int thrw(token_t token, char * type, char * content);
+int thrwLeaf(char * message);
 void warn(char * content);
 
 int ext(int code);

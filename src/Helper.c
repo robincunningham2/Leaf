@@ -35,6 +35,12 @@ int thrw(token_t token, char * type, char * content)
     return 1;
 }
 
+int thrwLeaf(char * message)
+{
+    printf("%s: %s\n", prcss.argv[0], message);
+    return 1;
+}
+
 void warn(char * content)
 {
     printf("\033[1m"); // Bold
