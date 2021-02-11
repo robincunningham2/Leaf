@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <assert.h>
+#include "../h/Memory.h"
 #include "../h/Helper.h"
 
 char * concat(char * s1, char * s2, char * s3)
@@ -38,6 +39,8 @@ int thrw(token_t token, char * type, char * content)
 int thrwLeaf(char * message)
 {
     printf("%s: %s\n", prcss.argv[0], message);
+    freeMemory();
+
     return 1;
 }
 
@@ -58,6 +61,8 @@ int ext(int code)
     assert(strftime(date, sizeof(date), "%c", tm));
 
     printf("\nProcess exited with code %d at %s\n", code, date);
+
+    freeMemory();
 
     return code;
 }
