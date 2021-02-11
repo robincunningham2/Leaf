@@ -2,8 +2,6 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include "../h/Helper.h"
-
 typedef struct
 {
     char ** values;
