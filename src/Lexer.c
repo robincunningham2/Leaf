@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "../h/Helper.h"
+#include "../h/Parser.h"
+#include "../h/Lexer.h"
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
@@ -31,8 +33,19 @@ int startLexer(char * buff) {
 
     while (token._isempty == FALSE)
     {
-        if (token._failed == TRUE) return 1;
-        printf("Type: %d, lineno: %d, text: %s, name: %s\n", token.type, token.lineno, token.text, getTokenName(token));
+        if (token._failed == TRUE)
+        {
+            yy_delete_buffer(buffer);
+            return 1;
+        }
+
+        int code = tokenHandler(token);
+        if (code)
+        {
+            yy_delete_buffer(buffer);
+            return code;
+        }
+
         token = lex();
     }
 

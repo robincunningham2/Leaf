@@ -7,6 +7,7 @@ FILES	?= src/Main.c \
 			src/Helper.c \
 			src/Memory.c \
 			src/Lexer.c \
+			src/Parser.c \
 			src/Lexer/lex.yy.c
 
 CFLAGS += -ljson-c
