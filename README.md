@@ -34,3 +34,6 @@ make install
 ```
 
 Now, Leaf can be found using the `leaf` command.
+
+## License
+[MIT](LICENSE)
