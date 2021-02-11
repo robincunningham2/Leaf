@@ -5,6 +5,7 @@
 #include "../h/Memory.h"
 #include "../h/Lexer.h"
 
+const char * versionString = "1.0.0";
 const char * help = "\n\
 Usage: leaf [options] [ script.lf ] [argv] \n\
        leaf [options] \n\
@@ -57,7 +58,7 @@ int main(int argc, char * argv[])
             } else if (strcmp(arg, "-v") == 0
                 || strcmp(arg, "--version") == 0)
             {
-                printf("v%s\n", "1.0.0");
+                printf("v%s\n", versionString);
                 return 0;
             } else if (foundFile == FALSE)
             {
