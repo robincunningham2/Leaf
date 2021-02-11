@@ -1,6 +1,18 @@
+# Project config
+.idea/
+
 # System files
 .DS_Store
 
-# Project
+# Test files
 test*.lf
+
+# GCC output files
 leaf
+*.out
+
+# C/C++ properties
+c_cpp_properties.json
+
+# Ignored
+.ignore/
