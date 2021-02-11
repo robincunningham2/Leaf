@@ -2,17 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../h/Helper.h"
-#include "../h/Version.h"
+#include "../h/Memory.h"
+#include "../h/Lexer.h"
 
-Process Main;
-
-extern int lexer(char * buffer);
-extern void error(char * name);
-extern void warn(char * content);
-extern int parseModuleFile();
-extern int exitProcess(int code);
-
-const char * help = "Usage: leaf [options] [ script.lf ] [argv] \n\
+const char * help = "\n\
+Usage: leaf [options] [ script.lf ] [argv] \n\
        leaf [options] \n\
 \n\
 Examples: \n\
@@ -23,21 +17,28 @@ Examples: \n\
 Options: \n\
     -h      --help          shows this message \n\
     -v      --version       gets Leaf version \n\
-    -d      --debug         sets System.debug variable to true";
+";
 
-int debug, active;
+int foundFile = FALSE;
 
 int main(int argc, char * argv[])
 {
-    Main.argv = argv;
-    Main.argc = argc;
-    Main.filepath = argv[0];
+    prcss.argc = argc;
+    prcss.argv = argv;
+
+    prcss.path = "test.lf";
+    prcss.abspath = "/Users/robin/Documents/GitHub/Leaf/test.lf";
 
     if (argc < 2)
     {
         printf("%s\n", help);
         return 0;
     }
+
+    memory_t memory;
+    prcss.memory = memory;
+
+    initMemory(&prcss.memory, 256);
 
     FILE * fp;
     long size;
@@ -56,38 +57,29 @@ int main(int argc, char * argv[])
             } else if (strcmp(arg, "-v") == 0
                 || strcmp(arg, "--version") == 0)
             {
-                printf("v%s\n", versionString);
+                printf("v%s\n", "1.0.0");
                 return 0;
-            } else if (strcmp(arg, "-d") == 0
-                || strcmp(arg, "--debug") == 0)
+            } else if (foundFile == FALSE)
             {
-                debug = TRUE;
-                printf("\033[37;2m");
-                printf("* Debug mode is enabled!\n");
-                printf("\033[0m");
-            } else if (active == FALSE)
-            {
-                printf("%s: bad option: %s\n", argv[0], arg);
-                return 1;
+               return thrwLeaf(concat("bad option: ", arg, ""));
             }
 
-            if (i == argc - 1 && active == FALSE) return 0;
+            if (i == argc - 1 && foundFile == FALSE) return 0;
             continue;
         }
 
-        if (active == TRUE)
+        if (foundFile == TRUE)
         {
             continue;
         }
 
-        Main.filepath = arg;
-        Main.absolute = realpath(arg, NULL);
+        prcss.path = arg;
+        prcss.abspath = realpath(prcss.path, NULL);
 
-        fp = fopen(Main.filepath, "rb");
+        fp = fopen(prcss.path, "rb");
         if (!fp)
         {
-            error("Module Error");
-            printf("module was not found.\n");
+            thrwLeaf(concat("module '", prcss.path, "' was not found"));
             return 1;
         }
 
@@ -98,11 +90,9 @@ int main(int argc, char * argv[])
         buffer = malloc((size) * sizeof(* buffer));
         fread(buffer, size, 1, fp);
         buffer[size] = '\0';
-        active = TRUE;
+        foundFile = TRUE;
     }
 
-    int code = parseModuleFile();
-    if (code) return exitProcess(code);
-
-    return lexer(buffer);
+    int code = startLexer(buffer);
+    return ext(code);
 }

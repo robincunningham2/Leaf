@@ -2,164 +2,64 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../h/Helper.h"
+#include "../h/Memory.h"
 
-typedef struct Object
+memory_t * def;
+
+void initMemory(memory_t * a, size_t initialSize)
 {
-    int builtIn;
-    char * name;
-    int type;
+    a -> values = malloc(initialSize * sizeof(char *));
+    a -> used = 0;
+    a -> size = initialSize;
 
-    int valid;
-
-    int intValue;
-    float floatValue;
-    char * stringValue;
-    int boolValue;
-} Object;
-
-typedef struct Memory
-{
-    int size;
-    Object memory[1028];
-} Memory;
-
-struct Memory mem;
-
-void createInt(char * name, int value, int builtIn)
-{
-    struct Object obj;
-
-    obj.valid = 1;
-    obj.type = TYPE_INT;
-
-    char * str = malloc(strlen(name) + 1);
-    strcpy(str, name);
-    obj.name = str;
-
-    obj.builtIn = builtIn;
-    obj.intValue = value;
-
-    mem.size++;
-    mem.memory[mem.size] = obj;
+    def = a;
 }
 
-int getInt(char * name)
+void insertToMemory(char * element)
 {
-    int result;
-
-    for (int i = 0; i < mem.size; i++)
-    {
-        struct Object obj = mem.memory[i];
-        if (obj.name == name)
-        {
-            result = obj.intValue;
-        }
+    if (def -> used == def -> size) {
+        def -> size *= 2;
+        def -> values = realloc(
+            def -> values,
+            def -> size * sizeof(char *)
+        );
     }
 
-    return result;
+    def -> values[def -> used++] = element;
 }
 
-void createFloat(char * name, float value, int builtIn)
+void freeMemory()
 {
-    struct Object obj;
-
-    obj.valid = 1;
-    obj.type = TYPE_FLOAT;
-
-    char * str = malloc(strlen(name) + 1);
-    strcpy(str, name);
-    obj.name = str;
-
-    obj.builtIn = builtIn;
-    obj.floatValue = value;
-
-    mem.size++;
-    mem.memory[mem.size] = obj;
+    free(def -> values);
+    def -> values = NULL;
+    def -> used = def -> size = 0;
 }
 
-float getFloat(char * name)
+char * valueToString(value_t value)
 {
-    float result;
+    char * s[strlen(value.value) + 2];
+    char * prefix = "";
+    if (value.type == type_float)   prefix = "f";
+    if (value.type == type_int)     prefix = "i";
+    if (value.type == type_string)  prefix = "s";
+    if (value.type == type_bool)    prefix = "b";
 
-    for (int i = 0; i < mem.size; i++)
-    {
-        struct Object obj = mem.memory[i];
-        if (obj.name == name)
-        {
-            result = obj.floatValue;
-        }
-    }
+    char * string;
+    string = concat(prefix, value.value, "");
 
-    return result;
+    return string;
 }
 
-void createString(char * name, char * value, int builtIn)
+value_t stringToValue(char * string)
 {
-    struct Object obj;
+    value_t value;
+    value.value = string;
+    value.value++;
 
-    obj.valid = 1;
-    obj.type = TYPE_STRING;
+    if (string[0] == 'f') value.type = type_float;
+    if (string[0] == 'i') value.type = type_int;
+    if (string[0] == 's') value.type = type_string;
+    if (string[0] == 'b') value.type = type_bool;
 
-    char * str = malloc(strlen(name) + 1);
-    strcpy(str, name);
-    obj.name = str;
-
-    obj.builtIn = builtIn;
-
-    char * str2 = malloc(strlen(value) + 1);
-    strcpy(str2, value);
-    obj.stringValue = str2;
-
-    mem.size++;
-    mem.memory[mem.size] = obj;
-}
-
-char * getString(char * name)
-{
-    char * result;
-
-    for (int i = 0; i < mem.size; i++)
-    {
-        struct Object obj = mem.memory[i];
-        if (obj.name == name)
-        {
-            result = obj.stringValue;
-        }
-    }
-
-    return result;
-}
-
-void createBool(char * name, int value, int builtIn)
-{
-    struct Object obj;
-
-    obj.valid = 1;
-    obj.type = TYPE_BOOL;
-
-    char * str = malloc(strlen(name) + 1);
-    strcpy(str, name);
-    obj.name = str;
-
-    obj.builtIn = builtIn;
-    obj.boolValue = value;
-
-    mem.size++;
-    mem.memory[mem.size] = obj;
-}
-
-int getBool(char * name)
-{
-    int result;
-
-    for (int i = 0; i < mem.size; i++)
-    {
-        struct Object obj = mem.memory[i];
-        if (obj.name == name)
-        {
-            result = obj.boolValue;
-        }
-    }
-
-    return result;
+    return value;
 }

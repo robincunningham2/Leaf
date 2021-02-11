@@ -1,57 +1,47 @@
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include <assert.h>
-#include <string.h>
-#include <stdlib.h>
-#include "../h/Tokens.h"
+#include "../h/Memory.h"
 #include "../h/Helper.h"
 
-extern Process Main;
-
-extern int yylineno;
-extern char * yytext;
-extern int active;
-
-char * getTokenName(int token)
+char * concat(char * s1, char * s2, char * s3)
 {
-    if (token == INTEGER)       return "integer";
-    if (token == FLOAT)         return "float";
-    if (token == STRING)        return "string";
-    if (token == BOOLEAN)       return "boolean";
-    if (token == KEYWORD)       return "keyword";
-    if (token == IDENTIFIER)    return "identifier";
-    if (token == LPAR)          return "'('";
-    if (token == RPAR)          return "')'";
-    if (token == LBR)           return "'{'";
-    if (token == RBR)           return "'}'";
-    if (token == LSQB)          return "'['";
-    if (token == RSQB)          return "']'";
-    if (token == PLUS)          return "'+'";
-    if (token == MINUS)         return "'-'";
-    if (token == MULTI)         return "'*'";
-    if (token == SLASH)         return "'/'";
-    if (token == VBAR)          return "'|'";
-    if (token == AND)           return "'&'";
-    if (token == DOT)           return "'.'";
-    if (token == COMMA)         return "','";
-    if (token == COLON)         return "':'";
-    if (token == SEMICOLON)     return "';'";
-    if (token == EQUAL)         return "'='";
-    if (token == ISEQUAL)       return "'=='";
-    if (token == NOTEQUAL)      return "'!='";
-    if (token == LESS)          return "'<'";
-    if (token == GREATER)       return "'>'";
-    if (token == ERROR)         return "error";
-    if (token == NONE)          return "none";
+    char s[strlen(s1) + strlen(s2) + strlen(s3) + 1];
+    snprintf(s, sizeof(s), "%s%s%s", s1, s2, s3);
+
+    return s;
 }
 
-void error(char * name)
+char * getTokenName(token_t token)
 {
-    if (active == TRUE) printf("\n%s:%d:\n", Main.absolute, yylineno);
+    if (token.type == token_int)            return "integer";
+    else if (token.type == token_float)     return "float";
+    else if (token.type == token_string)    return "string";
+    else if (token.type == token_bool)      return "boolean";
+    else if (token.type == token_keyword)   return "keyword";
+    else if (token.type == token_id)        return "identifier";
+    else return concat("'", token.text, "'");
+}
+
+int thrw(token_t token, char * type, char * content)
+{
+    printf("\n%s:%d:\n", prcss.abspath, token.lineno);
     printf("Uncaught ");
     printf("\033[1m"); // Bold
-    printf("%s: ", name);
+    printf("%s: ", type);
     printf("\033[0m"); // Reset
+    printf("%s\n", content);
+
+    return 1;
+}
+
+int thrwLeaf(char * message)
+{
+    printf("%s: %s\n", prcss.argv[0], message);
+    freeMemory();
+
+    return 1;
 }
 
 void warn(char * content)
@@ -62,7 +52,7 @@ void warn(char * content)
     printf("%s\n", content);
 }
 
-int exitProcess(int code)
+int ext(int code)
 {
     time_t t = time(NULL);
     struct tm * tm = localtime(&t);
@@ -72,49 +62,7 @@ int exitProcess(int code)
 
     printf("\nProcess exited with code %d at %s\n", code, date);
 
+    freeMemory();
+
     return code;
-}
-
-char * parseString(char * str)
-{
-    str[strlen(str) - 2] = '\0';
-    str++;
-
-    return str;
-}
-
-Token getToken(int token)
-{
-    Token result;
-    result.token = token;
-    result.lineno = yylineno;
-    result.str = yytext;
-    result.name = getTokenName(token);
-
-    return result;
-}
-
-Value getValueFromToken(Token val)
-{
-    Value result;
-    switch (val.token)
-    {
-        default:
-        case INTEGER:
-            result.type = TYPE_INT;
-            result.intValue = atoi(val.str);
-            break;
-        case FLOAT:
-            result.type = TYPE_FLOAT;
-            result.floatValue = atof(val.str);
-        case STRING:
-            result.type = TYPE_STRING;
-            result.stringValue = val.str;
-        case BOOLEAN:
-            result.type = TYPE_BOOL;
-            if (strcmp(val.str, "true") == 0) result.boolValue = 1;
-            else result.boolValue = 0;
-    }
-
-    return result;
 }
