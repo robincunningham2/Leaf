@@ -44,26 +44,32 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-typedef struct
-{
-    int type;
-    char * value;
-} value_t;
+#include "../h/Memory.h"
+
+typedef struct {
+    int argc;
+    char ** argv;
+    memory_t memory;
+    char * path;
+    char * abspath;
+} process_t;
+
+process_t prcss;
 
 typedef struct
 {
-    int _success;
+    int _failed;
+    int _isempty;
     int type;
     int lineno;
     char * text;
 } token_t;
 
 char * concat(char * s1, char * s2, char * s3);
-char * valueToString(value_t value);
 
 char * getTokenName(token_t token);
 
-int thrw(char * type, char * content);
+int thrw(token_t token, char * type, char * content);
 void warn(char * content);
 
 int ext(int code);

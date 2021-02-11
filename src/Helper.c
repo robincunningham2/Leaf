@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <assert.h>
@@ -9,20 +8,6 @@ char * concat(char * s1, char * s2, char * s3)
 {
     char s[strlen(s1) + strlen(s2) + strlen(s3) + 1];
     snprintf(s, sizeof(s), "%s%s%s", s1, s2, s3);
-
-    return s;
-}
-
-char * valueToString(value_t value)
-{
-    char * prefix;
-    if (value.type == type_float)   prefix = "f";
-    if (value.type == type_int)     prefix = "i";
-    if (value.type == type_string)  prefix = "s";
-    if (value.type == type_bool)    prefix = "b";
-
-    char s[strlen(prefix) + strlen(value.value) + 1];
-    snprintf(s, sizeof(s), "%s%s", prefix, value.value);
 
     return s;
 }
@@ -38,15 +23,16 @@ char * getTokenName(token_t token)
     else return concat("'", token.text, "'");
 }
 
-int thrw(char * type, char * content)
+int thrw(token_t token, char * type, char * content)
 {
+    printf("\n%s:%d:\n", prcss.abspath, token.lineno);
     printf("Uncaught ");
     printf("\033[1m"); // Bold
     printf("%s: ", type);
     printf("\033[0m"); // Reset
     printf("%s\n", content);
 
-    return ext(1);
+    return 1;
 }
 
 void warn(char * content)
@@ -65,8 +51,7 @@ int ext(int code)
     char date[64];
     assert(strftime(date, sizeof(date), "%c", tm));
 
-    printf("\nProcess exited with code 1 at %s\n", date);
-    free(date);
+    printf("\nProcess exited with code %d at %s\n", code, date);
 
     return code;
 }

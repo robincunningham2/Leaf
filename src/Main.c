@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include "../h/Helper.h"
 #include "../h/Memory.h"
+#include "../h/Lexer.h"
 
 int main(int argc, char * argv[])
 {
+    prcss.argc = argc;
+    prcss.argv = argv;
+
+    prcss.path = "test.lf";
+    prcss.abspath = "/Users/robin/Documents/GitHub/Leaf/test.lf";
+
     memory_t memory;
-    initMemory(&memory, 256);
+    prcss.memory = memory;
 
-    value_t val;
-    val.type = type_float;
-    val.value = "3.6547";
+    initMemory(&prcss.memory, 256);
 
-    printf("%s\n", valueToString(val));
-    insertToMemory(&memory, valueToString(val));
-
-    return 0;
+    int code = startLexer("module \"main\"; val test68 = \"Lmao.\"; 0");
+    return ext(code);
 }
